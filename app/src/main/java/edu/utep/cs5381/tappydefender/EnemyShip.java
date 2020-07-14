@@ -86,8 +86,7 @@ public class EnemyShip{
     // This is used by the TDView update() method to
     // Make an enemy out of bounds and force a re-spawn
     public void setX(int x) {
+
         this.x = x;
     }
-
-
 }

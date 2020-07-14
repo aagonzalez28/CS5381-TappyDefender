@@ -3,6 +3,7 @@ package edu.utep.cs5381.tappydefender;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 public class PlayerShip {
     private Bitmap bitmap;
@@ -21,6 +22,9 @@ public class PlayerShip {
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
 
+    // A hit box for collision detection
+    private Rect hitBox;
+
     // Constructor
     public PlayerShip(Context context, int screenX, int screenY) {
         x = 50;
@@ -32,6 +36,9 @@ public class PlayerShip {
 
         maxY = screenY - bitmap.getHeight();
         minY = 0;
+
+        // Initialize the hit box
+        hitBox = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
 
     }
 
@@ -69,6 +76,12 @@ public class PlayerShip {
         if (y > maxY) {
             y = maxY;
         }
+
+        // Refresh hit box location
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + bitmap.getWidth();
+        hitBox.bottom = y + bitmap.getHeight();
     }
 
     //Getters
@@ -90,5 +103,9 @@ public class PlayerShip {
     public int getY() {
 
         return y;
+    }
+
+    public Rect getHitbox(){
+        return hitBox;
     }
 }
