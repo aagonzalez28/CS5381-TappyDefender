@@ -52,4 +52,3 @@ public class SpaceDust {
         return y;
     }
 }
-

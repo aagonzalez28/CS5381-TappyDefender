@@ -10,6 +10,7 @@ public class PlayerShip {
     private int x, y;
     private int speed;
 
+    private int shieldStrength;
     private boolean boosting;
 
     private final int GRAVITY = -12;
@@ -18,7 +19,6 @@ public class PlayerShip {
     private int maxY;
     private int minY;
 
-    //Limit the bounds of the ship's speed
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
 
@@ -27,12 +27,13 @@ public class PlayerShip {
 
     // Constructor
     public PlayerShip(Context context, int screenX, int screenY) {
+        boosting = false;
         x = 50;
         y = 50;
+
+        shieldStrength = 30;
         speed = 1;
-        boosting = false;
-        bitmap = BitmapFactory.decodeResource
-                (context.getResources(), R.drawable.ship);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ship);
 
         maxY = screenY - bitmap.getHeight();
         minY = 0;
@@ -42,34 +43,25 @@ public class PlayerShip {
 
     }
 
-    public void setBoosting() {
-        boosting = true;
-    }
-
-    public void stopBoosting() {
-        boosting = false;
-    }
-
     public void update() {
-        // Are we boosting?
         if (boosting) {
-            // Speed up
             speed += 2;
         } else {
-            // Slow down
             speed -= 5;
         }
-        // Constrain top speed
+
         if (speed > MAX_SPEED) {
             speed = MAX_SPEED;
         }
-        // Never stop completely
+
         if (speed < MIN_SPEED) {
             speed = MIN_SPEED;
         }
-        // move the ship up or down
+
+        // fly up or down
         y -= speed + GRAVITY;
-        // But don't let ship stray off screen
+
+        // Don't let ship stray off screen
         if (y < minY) {
             y = minY;
         }
@@ -82,6 +74,17 @@ public class PlayerShip {
         hitBox.top = y;
         hitBox.right = x + bitmap.getWidth();
         hitBox.bottom = y + bitmap.getHeight();
+
+    }
+
+    public void setBoosting() {
+
+        boosting = true;
+    }
+
+    public void stopBoosting() {
+
+        boosting = false;
     }
 
     //Getters
@@ -107,5 +110,14 @@ public class PlayerShip {
 
     public Rect getHitbox(){
         return hitBox;
+    }
+
+    public int getShieldStrength() {
+
+        return shieldStrength;
+    }
+
+    public void reduceShieldStrength(){
+        shieldStrength --;
     }
 }

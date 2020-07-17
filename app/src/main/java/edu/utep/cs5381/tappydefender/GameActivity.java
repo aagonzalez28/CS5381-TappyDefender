@@ -21,22 +21,20 @@ public class GameActivity extends Activity {
         Point size = new Point();
         display.getSize(size);
 
-        // Create an instance of our Tappy Defender View (TDView)
-        // Also passing in this which is the Context of our app
+        // Create an instance of our Tappy Defender View
+        // Also passing in this.
+        // Also passing in the screen resolution to the constructor
         gameView = new TDView(this, size.x, size.y);
 
         // Make our gameView the view for the Activity
         setContentView(gameView);
-
     }
-
     // If the Activity is paused make sure to pause our thread
     @Override
     protected void onPause() {
         super.onPause();
         gameView.pause();
     }
-
     // If the Activity is resumed make sure to resume our thread
     @Override
     protected void onResume() {
